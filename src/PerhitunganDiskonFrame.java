@@ -1,3 +1,4 @@
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class PerhitunganDiskonFrame extends javax.swing.JFrame {
@@ -94,13 +95,18 @@ public class PerhitunganDiskonFrame extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Fira Code Medium", 0, 12)); // NOI18N
         jLabel4.setText("Kode Kupon");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
 
         txtHargaAsli.setFont(new java.awt.Font("Fira Code Medium", 0, 12)); // NOI18N
+        txtHargaAsli.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtHargaAsliKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtHargaAsli, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 140, -1));
 
         txtKupon.setFont(new java.awt.Font("Fira Code Medium", 0, 12)); // NOI18N
-        jPanel1.add(txtKupon, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 140, -1));
+        jPanel1.add(txtKupon, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 200, 140, -1));
 
         cmbDiskon.setFont(new java.awt.Font("Fira Code Medium", 0, 12)); // NOI18N
         cmbDiskon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0%", "5%", "10%", "15%", "20%", "25%", "30%", "40%", "50%", " ", " " }));
@@ -119,7 +125,7 @@ public class PerhitunganDiskonFrame extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
 
         jButton2.setBackground(new java.awt.Color(229, 229, 229));
         jButton2.setFont(new java.awt.Font("Fira Code Medium", 0, 12)); // NOI18N
@@ -129,7 +135,7 @@ public class PerhitunganDiskonFrame extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, -1, -1));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 214, 214));
 
@@ -238,14 +244,14 @@ public class PerhitunganDiskonFrame extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, -1, -1));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, -1, -1));
 
         sliderDiskon.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sliderDiskonStateChanged(evt);
             }
         });
-        jPanel1.add(sliderDiskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 160, 10));
+        jPanel1.add(sliderDiskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 290, 40));
 
         getContentPane().add(jPanel1);
 
@@ -257,7 +263,9 @@ public class PerhitunganDiskonFrame extends javax.swing.JFrame {
 
         
         try {
-        double hargaAsli = Double.parseDouble(txtHargaAsli.getText());
+        String inputHarga = txtHargaAsli.getText().replace(".", "").replace(",", "").trim();
+        double hargaAsli = Double.parseDouble(inputHarga);
+
         String diskonStr = cmbDiskon.getSelectedItem().toString().replace("%", "");
         double diskonPersen = Double.parseDouble(diskonStr);
         String kodeKupon = txtKupon.getText();
@@ -377,6 +385,16 @@ public class PerhitunganDiskonFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_cmbDiskonItemStateChanged
+
+    private void txtHargaAsliKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHargaAsliKeyTyped
+    char c = evt.getKeyChar();
+
+    // Izinkan angka, backspace, delete, dan titik (.)
+    if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE && c != '.') {
+        evt.consume();
+        JOptionPane.showMessageDialog(this, "Data tidak valid, harap isi dengan angka.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+    }
+    }//GEN-LAST:event_txtHargaAsliKeyTyped
 
     /**
      * @param args the command line arguments
